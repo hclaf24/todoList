@@ -1,0 +1,203 @@
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-height: 100vh;
+  color: white;
+  justify-content: center;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+body.dark {
+  background-color: #161722;
+}
+
+body.light {
+  background-color: #e4e5f1;
+}
+
+h1 {
+  text-transform: uppercase;
+  letter-spacing: .5em;
+  margin: 1em 0;
+}
+
+.light h1 {
+  color: #484b6a;
+}
+
+header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+header > button {
+  border: none;
+  height: 2em;
+  width: 2em;
+  margin: 1em 0;
+  background-size: 100% 100%;
+  outline: none;
+}
+
+.dark > header > button {
+  background-image: url('./assets/icon-sun.svg');
+}
+
+.light > header > button {
+  background-image: url('./assets/icon-moon.svg');
+}
+
+button {
+  border: none;
+  background-color: transparent;
+}
+
+.add {
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.add > svg {
+  width: 1.75em;
+  height: 1.75em;
+}
+
+.dark > main > form > .add > svg {
+  color: #777a92;
+}
+
+.light > main > form > .add > svg {
+  color: #777a92;
+}
+
+.dark .add:hover > svg, .light .add:hover > svg {
+  color: #3a7bfd;
+}
+
+.delete {
+  background-image: url('./assets/icon-cross.svg');
+  background-size: 100% 100%;
+  display: none;
+  height: 1em;
+  width: 1em;
+}
+
+li:hover .delete {
+  display: block;
+}
+
+li {
+  list-style-type: none;
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #777a92;
+  align-items: center;
+}
+
+li > div {
+  gap: 1em;
+  display: flex;
+  align-items: flex-start;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+form {
+  display: flex;
+  gap: 1em;
+  border-radius: .25em;
+  align-items: flex-end;
+  padding: 1em;
+}
+
+.dark > main > form {
+  background-color: #25273c;
+}
+
+.light > main > form {
+  background-color: white;
+}
+
+form > input, form > input::placeholder {
+  width: 100%;
+  font-family: "Josefin Sans", sans-serif;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #d2d3db;
+  font-size: 1em;
+}
+
+form > input::placeholder {
+  color: #777a92;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  color: #777a92;
+  font-size: .75em;
+}
+
+.nav > div {
+  display: flex;
+  gap: 1em;
+}
+
+.nav > div > button {
+  color: #777a92;
+  width: fit-content;
+  padding: 0 .5em;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 1em;
+}
+
+.nav > div > button.active {
+  color: #3a7bfd;
+}
+
+.clearCompleted {
+  color: #777a92;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 1em;
+}
+
+main > div {
+  margin-top: 1em;
+  border-radius: .25em;
+  min-width: 400px;
+}
+
+.light > main > div {
+  background-color: #fafafa;
+  color: #484b6a;
+}
+
+.dark > main > div {
+  background-color: #25273c;
+  color: #d2d3db;
+}
+
+.circle-input {
+  font-size: 14px;
+  border-radius: 50%;
+  width: 1.25em;
+  height: 1.25em;
+  background-color: transparent;
+  border: 1px solid #777a92;
+}
+
+input[type="checkbox"] {
+  margin: 0;
+  width: 1.75em;
+  accent-color: #3a7bfd;
+}
