@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TodoItem from "./TodoItem";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
-const TodoList = ({ todoList, setTodoList, toggleCompleted, deleteTodo }) => {
+const TodoList = ({ todoList, setTodoList, toggleCompleted, menuOptions }) => {
   const [navState, setNavState] = useState("All");
 
   const handleNavState = (button) => {
@@ -16,13 +16,13 @@ const TodoList = ({ todoList, setTodoList, toggleCompleted, deleteTodo }) => {
     const [movedItem] = reorderedList.splice(result.source.index, 1);
     reorderedList.splice(result.destination.index, 0, movedItem);
 
-    setTodoList(reorderedList);  // <-- Update global state!
+    setTodoList(reorderedList);  // Update global state
   };
   
   const clearCompleted = () => {
     // Remove completed items by filtering out items that are not completed
     const activeTodos = todoList.filter(item => !item.completed);
-    setTodoList(activeTodos); // Update the todo list state with only active todos
+    setTodoList(activeTodos);
   };
 
   let allTotal, activeTotal, completedTotal = 0;
@@ -46,7 +46,7 @@ const TodoList = ({ todoList, setTodoList, toggleCompleted, deleteTodo }) => {
               {filteredList.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
                   {(provided) => (
-                    <li
+                    <li className='todoContainer'
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
@@ -58,7 +58,7 @@ const TodoList = ({ todoList, setTodoList, toggleCompleted, deleteTodo }) => {
                       <TodoItem
                         item={item}
                         toggleCompleted={toggleCompleted}
-                        deleteTodo={deleteTodo}
+                        menuOptions={menuOptions}
                       />
                     </li>
                   )}

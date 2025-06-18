@@ -4,12 +4,24 @@ import TodoList from './components/TodoList';
 
 function App() {
 
-  const [darkMode, setDarkMode] = useState(true);
+  const getInitialMode = () => {
+    const saved = localStorage.getItem("darkMode");
+    if (saved !== null) return JSON.parse(saved);
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  };
+
+  const [darkMode, setDarkMode] = useState(getInitialMode);
+
   const [todoList, setTodoList] = useState(() => JSON.parse(localStorage.getItem("todoList")) || []);
+  const [colors] = useState(['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple']);
 
   useEffect(() => {
     localStorage.setItem("todoList", JSON.stringify(todoList));
   }, [todoList]);
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
 
   useEffect(() => {
     document.body.classList.toggle("dark", darkMode);
@@ -30,6 +42,14 @@ function App() {
     setTodoList([...todoList, todo]);
   };
 
+  const editTodo = (todoId, updates) => {
+    setTodoList((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === todoId ? { ...todo, ...updates } : todo
+      )
+    );
+  };
+
   const toggleCompleted = (todoId) => {
     const updatedTodoList = todoList.map((todo) => {
       if (todo.id === todoId) {
@@ -47,6 +67,16 @@ function App() {
     );
   };
 
+  const setColor = (todoId, color) => {
+    editTodo(todoId, { color });
+  };
+
+  const menuOptions = {
+    setColor,
+    colors,
+    deleteTodo
+  }
+
   return (
     <>
       <div className={darkMode ? "dark" : "light"}>
@@ -56,7 +86,7 @@ function App() {
         </header>
         <main>
           <NewTodo onSubmit={addTodo} />
-          <TodoList todoList={todoList} toggleCompleted={toggleCompleted} deleteTodo={deleteTodo} setTodoList={setTodoList} />
+          <TodoList todoList={todoList} setTodoList={setTodoList} toggleCompleted={toggleCompleted}  menuOptions={menuOptions} />
         </main>
       </div>
 

@@ -1,19 +1,39 @@
+:root {
+  --color-bg-light: #e4e5f1;
+  --color-bg-dark: #161722;
+
+  --color-text-primary-light: #484b6a;
+  --color-text-primary-dark: #d2d3db;
+
+  --color-text-secondary: #777a92;
+
+  --color-card-bg-light: #fafafa;
+  --color-card-bg-dark: #25273c;
+
+  --color-accent: #3a7bfd;
+
+  --color-dropdown-bg-light: #FFFFFF;
+  --color-dropdown-bg-dark: #161722;
+}
+
 body {
   margin: 0;
   display: flex;
   place-items: center;
   min-height: 100vh;
-  color: white;
+  color: var(--color-text-primary-dark);
   justify-content: center;
   font-family: "Josefin Sans", sans-serif;
 }
 
 body.dark {
-  background-color: #161722;
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-primary-dark);
 }
 
 body.light {
-  background-color: #e4e5f1;
+  background-color: var(--color-bg-light);
+  color: var(--color-text-primary-light);
 }
 
 h1 {
@@ -23,7 +43,7 @@ h1 {
 }
 
 .light h1 {
-  color: #484b6a;
+  color: var(--color-text-primary-light);
 }
 
 header {
@@ -63,39 +83,30 @@ button {
 .add > svg {
   width: 1.75em;
   height: 1.75em;
+  color: var(--color-text-secondary);
 }
 
-.dark > main > form > .add > svg {
-  color: #777a92;
-}
-
+.dark > main > form > .add > svg,
 .light > main > form > .add > svg {
-  color: #777a92;
+  color: var(--color-text-secondary);
 }
 
-.dark .add:hover > svg, .light .add:hover > svg {
-  color: #3a7bfd;
+.dark .add:hover > svg,
+.light .add:hover > svg {
+  color: var(--color-accent);
 }
 
-.delete {
-  background-image: url('./assets/icon-cross.svg');
-  background-size: 100% 100%;
-  display: none;
-  height: 1em;
-  width: 1em;
-}
-
-li:hover .delete {
-  display: block;
-}
-
-li {
+.todoContainer {
   list-style-type: none;
   padding: 1em;
   display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #777a92;
+  justify-content: flex-start;
+  border-bottom: 1px solid var(--color-text-secondary);
   align-items: center;
+}
+
+li {
+  list-style: none;
 }
 
 li > div {
@@ -118,25 +129,30 @@ form {
 }
 
 .dark > main > form {
-  background-color: #25273c;
+  background-color: var(--color-card-bg-dark);
 }
 
 .light > main > form {
-  background-color: white;
+  background-color: var(--color-card-bg-light);
 }
 
-form > input, form > input::placeholder {
+form > input,
+form > input::placeholder {
   width: 100%;
   font-family: "Josefin Sans", sans-serif;
   background-color: transparent;
   border: none;
   outline: none;
-  color: #d2d3db;
+  color: var(--color-text-secondary);
   font-size: 1em;
 }
 
-form > input::placeholder {
-  color: #777a92;
+.light form > input {
+  color: var(--color-text-primary-light);
+}
+
+.dark form > input {
+  color: var(--color-text-primary-dark);
 }
 
 .nav {
@@ -144,7 +160,7 @@ form > input::placeholder {
   justify-content: space-between;
   align-items: center;
   padding: 1em;
-  color: #777a92;
+  color: var(--color-text-secondary);
   font-size: .75em;
 }
 
@@ -154,7 +170,7 @@ form > input::placeholder {
 }
 
 .nav > div > button {
-  color: #777a92;
+  color: var(--color-text-secondary);
   width: fit-content;
   padding: 0 .5em;
   font-family: "Josefin Sans", sans-serif;
@@ -162,11 +178,11 @@ form > input::placeholder {
 }
 
 .nav > div > button.active {
-  color: #3a7bfd;
+  color: var(--color-accent);
 }
 
 .clearCompleted {
-  color: #777a92;
+  color: var(--color-text-secondary);
   font-family: "Josefin Sans", sans-serif;
   font-size: 1em;
 }
@@ -178,13 +194,13 @@ main > div {
 }
 
 .light > main > div {
-  background-color: #fafafa;
-  color: #484b6a;
+  background-color: var(--color-card-bg-light);
+  color: var(--color-text-primary-light);
 }
 
 .dark > main > div {
-  background-color: #25273c;
-  color: #d2d3db;
+  background-color: var(--color-card-bg-dark);
+  color: var(--color-text-primary-dark);
 }
 
 .circle-input {
@@ -193,11 +209,220 @@ main > div {
   width: 1.25em;
   height: 1.25em;
   background-color: transparent;
-  border: 1px solid #777a92;
+  border: 1px solid var(--color-text-secondary);
 }
 
 input[type="checkbox"] {
   margin: 0;
   width: 1.75em;
-  accent-color: #3a7bfd;
+  accent-color: var(--color-accent);
+}
+
+.kebab-button {
+  opacity: 1;
+  color: var(--color-text-secondary);
+  transition: opacity 0.2s ease;
+}
+
+.menu-wrapper.open .kebab-button {
+  display: none;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75em 1em;
+  width: 100%;
+  gap: 1em;
+}
+
+.todo-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.todo-content span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5em;
+  z-index: 10;
+  background-color: var(--color-dropdown-bg-light);
+  color: var(--color-text-primary-light);
+  border: 1px solid var(--color-text-secondary);
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 0.5em 0;
+  min-width: 150px;
+}
+
+body.dark .dropdown-menu {
+  background-color: var(--color-dropdown-bg-dark);
+  color: var(--color-text-primary-dark);
+}
+
+.dropdownItem,
+.colorItems {
+  padding: .5em 1em;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+body.dark .dropdown-menu .dropdownItem:hover, body.dark .dropdown-menu .colorItems:hover {
+  background-color: var(--color-text-primary-dark);
+  color: var(--color-bg-dark);
+}
+
+body.light .dropdown-menu .dropdownItem:hover, body.light .dropdown-menu .colorItems:hover {
+  background-color: var(--color-text-primary-light);
+  color: var(--color-dropdown-bg-light);
+}
+
+.close-button {
+  padding: 0 .5em;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-button button {
+  border: none;
+  background: transparent;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  line-height: 1;
+}
+
+body.dark .close-button button {
+  color: var(--color-text-secondary);
+}
+
+.close-button button:hover {
+  color: var(--color-text-primary-light);
+}
+
+body.dark .close-button button:hover {
+  color: var(--color-text-primary-dark);
+}
+
+.color-dot {
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  border-radius: 50%;
+  margin-right: 0.5em;
+  vertical-align: middle;
+}
+
+/* Task tag color classes */
+.color-Red {
+  background-color: #e63946;
+}
+.color-Orange {
+  background-color: #f97316;
+}
+.color-Yellow {
+  background-color: #ffd60a;
+}
+.color-Green {
+  background-color: #2ecc71;
+}
+.color-Blue {
+  background-color: var(--color-accent);
+}
+.color-Purple {
+  background-color: #a259ff;
+}
+
+.todo-color-tag {
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  border-radius: 50%;
+  margin-left: 0.5em;
+}
+
+.back {
+  cursor: pointer;
+  padding: 0.5em 1em;
+  position: relative;
+}
+
+.back::before {
+  content: "←";
+  margin-right: 0.5em;
+  font-weight: bold;
+}
+
+.back:hover {
+  color: var(--color-text-primary-light);
+  background-color: var(--color-text-primary-light);
+}
+
+body.dark .back:hover {
+  color: var(--color-text-primary-dark);
+  background-color: var(--color-text-primary-dark);
+}
+
+/* Confirm Delete */
+.confirm-delete {
+  padding: 0.5em 1em;
+  text-align: center;
+}
+
+.confirm-delete p {
+  margin: 0 0 0.75em;
+  font-weight: bold;
+}
+
+.confirm-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5em;
+}
+
+.confirm-btn {
+  padding: .9em .8em .8em;
+  white-space: nowrap;
+  border-radius: 4px;
+  font-family: "Josefin Sans", sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border: none;
+}
+
+.confirm-btn.delete {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.confirm-btn.delete:hover {
+  background-color: #c0392b;
+}
+
+.confirm-btn.cancel {
+  background-color: #dfe4ea;
+  color: #2c3e50;
+}
+
+.confirm-btn.cancel:hover {
+  background-color: #ced6e0;
 }
