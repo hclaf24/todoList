@@ -4,6 +4,7 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const TodoList = ({ todoList, setTodoList, toggleCompleted, menuOptions }) => {
   const [navState, setNavState] = useState("All");
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   const handleNavState = (button) => {
     setNavState(button);
@@ -18,15 +19,15 @@ const TodoList = ({ todoList, setTodoList, toggleCompleted, menuOptions }) => {
 
     setTodoList(reorderedList);  // Update global state
   };
-  
+
   const clearCompleted = () => {
     // Remove completed items by filtering out items that are not completed
-    const activeTodos = todoList.filter(item => !item.completed);
-    setTodoList(activeTodos);
+    setTodoList((prev) => prev.filter((todo) => !todo.completed));
+    setShowClearConfirm(false);
   };
 
   let allTotal, activeTotal, completedTotal = 0;
-  
+
   let filteredList = todoList;
   allTotal = filteredList.length;
   if (navState === "Active") {
@@ -85,7 +86,25 @@ const TodoList = ({ todoList, setTodoList, toggleCompleted, menuOptions }) => {
           <button onClick={() => handleNavState('Active')} className={navState === 'Active' ? 'active' : ''}>Active</button>
           <button onClick={() => handleNavState('Completed')} className={navState === 'Completed' ? 'active' : ''}>Completed</button>
         </div>
-        <button className='clearCompleted' onClick={clearCompleted}>Clear Completed</button>
+        <button className="clearCompleted" onClick={() => setShowClearConfirm(true)}>
+          Clear Completed
+        </button>
+
+        {showClearConfirm && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <p>Clear all completed tasks?</p>
+              <div className="confirm-buttons">
+                <button className="confirm-btn delete" onClick={clearCompleted}>
+                  Yes, clear
+                </button>
+                <button className="confirm-btn cancel" onClick={() => setShowClearConfirm(false)}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

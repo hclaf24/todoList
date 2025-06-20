@@ -16,14 +16,35 @@
   --color-dropdown-bg-dark: #161722;
 }
 
+* {
+  box-sizing: inherit;
+}
+
+html,
 body {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: auto;
   display: flex;
-  place-items: center;
+  flex-direction: column;
+  align-items: center;
   min-height: 100vh;
   color: var(--color-text-primary-dark);
-  justify-content: center;
   font-family: "Josefin Sans", sans-serif;
+  box-sizing: border-box;
+  padding: 2em;
+  width: 100%;
 }
 
 body.dark {
@@ -103,6 +124,7 @@ button {
   justify-content: flex-start;
   border-bottom: 1px solid var(--color-text-secondary);
   align-items: center;
+  border-radius: .25em;
 }
 
 li {
@@ -156,17 +178,38 @@ form > input::placeholder {
 }
 
 .nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: var(--color-card-bg-light);
+  padding: 1em;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1em;
+  flex-direction: column;
+  gap: 1.5em;
   color: var(--color-text-secondary);
-  font-size: .75em;
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-size: .8em;
+}
+
+.nav * {
+  box-sizing: border-box;
+}
+
+body.dark .nav {
+  background-color: var(--color-card-bg-dark);
 }
 
 .nav > div {
   display: flex;
-  gap: 1em;
+  gap: 1.5em;
 }
 
 .nav > div > button {
@@ -175,10 +218,19 @@ form > input::placeholder {
   padding: 0 .5em;
   font-family: "Josefin Sans", sans-serif;
   font-size: 1em;
+  white-space: normal;
+  text-align: center;
+  max-width: 100%;
+  overflow-wrap: normal;
 }
 
 .nav > div > button.active {
   color: var(--color-accent);
+}
+
+.nav span {
+  text-align: center;
+  line-height: 1.4;
 }
 
 .clearCompleted {
@@ -190,7 +242,7 @@ form > input::placeholder {
 main > div {
   margin-top: 1em;
   border-radius: .25em;
-  min-width: 400px;
+  min-width: 100%;
 }
 
 .light > main > div {
@@ -214,14 +266,17 @@ main > div {
 
 input[type="checkbox"] {
   margin: 0;
-  width: 1.75em;
+  height: 1.5em;
+  width: 1.5em;
   accent-color: var(--color-accent);
+  margin-right: .5em;
 }
 
 .kebab-button {
   opacity: 1;
   color: var(--color-text-secondary);
   transition: opacity 0.2s ease;
+  font-size: 1.5em;
 }
 
 .menu-wrapper.open .kebab-button {
@@ -232,9 +287,10 @@ input[type="checkbox"] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75em 1em;
+  padding: 0;
   width: 100%;
-  gap: 1em;
+  min-height: 2em;
+  gap: .5em;
 }
 
 .todo-content {
@@ -244,12 +300,19 @@ input[type="checkbox"] {
   flex: 1;
   min-width: 0;
   overflow: hidden;
+  width: 100%;
 }
 
 .todo-content span {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: wrap;
+  line-height: 1.4;
+}
+
+.todo-content input[type="checkbox"],
+.todo-color-tag {
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: auto;
 }
 
 .menu-wrapper {
@@ -263,15 +326,16 @@ input[type="checkbox"] {
   position: absolute;
   top: 100%;
   right: 0;
+  left: auto;
   margin-top: 0.5em;
   z-index: 10;
   background-color: var(--color-dropdown-bg-light);
   color: var(--color-text-primary-light);
   border: 1px solid var(--color-text-secondary);
   border-radius: 6px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 0.5em 0;
-  min-width: 150px;
+  min-width: 100%;
 }
 
 body.dark .dropdown-menu {
@@ -286,12 +350,14 @@ body.dark .dropdown-menu {
   white-space: nowrap;
 }
 
-body.dark .dropdown-menu .dropdownItem:hover, body.dark .dropdown-menu .colorItems:hover {
+body.dark .dropdown-menu .dropdownItem:hover,
+body.dark .dropdown-menu .colorItems:hover {
   background-color: var(--color-text-primary-dark);
   color: var(--color-bg-dark);
 }
 
-body.light .dropdown-menu .dropdownItem:hover, body.light .dropdown-menu .colorItems:hover {
+body.light .dropdown-menu .dropdownItem:hover,
+body.light .dropdown-menu .colorItems:hover {
   background-color: var(--color-text-primary-light);
   color: var(--color-dropdown-bg-light);
 }
@@ -336,18 +402,23 @@ body.dark .close-button button:hover {
 .color-Red {
   background-color: #e63946;
 }
+
 .color-Orange {
   background-color: #f97316;
 }
+
 .color-Yellow {
   background-color: #ffd60a;
 }
+
 .color-Green {
   background-color: #2ecc71;
 }
+
 .color-Blue {
   background-color: var(--color-accent);
 }
+
 .color-Purple {
   background-color: #a259ff;
 }
@@ -396,7 +467,8 @@ body.dark .back:hover {
 .confirm-buttons {
   display: flex;
   justify-content: center;
-  gap: 1.5em;
+  flex-direction: column;
+  gap: 1em;
 }
 
 .confirm-btn {
@@ -426,3 +498,85 @@ body.dark .back:hover {
 .confirm-btn.cancel:hover {
   background-color: #ced6e0;
 }
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background-color: var(--color-dropdown-bg-light);
+  color: var(--color-text-primary-light);
+  padding: 2em;
+  border-radius: 8px;
+  max-width: 90%;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .modal-content {
+  background-color: var(--color-dropdown-bg-dark);
+  color: var(--color-text-primary-dark);
+}
+
+/* Medium: Tablets and small laptops */
+@media (min-width: 601px) {
+  body {
+    max-width: 80%;
+  }
+
+  .todoContainer {
+    border-radius: 0;
+  }
+
+  .nav,
+  .confirm-buttons {
+    flex-direction: row;
+  }
+
+  .nav {
+    position: static;
+    box-shadow: none;
+    width: auto;
+    padding: 1em;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: .25em;
+  }
+}
+
+/* Large: Laptops and desktops */
+@media (min-width: 901px) {
+  body {
+    max-width: 60%;
+  }
+
+  main>div {
+    min-width: 400px;
+  }
+
+  .todo-item {
+    padding: 0.75em 1em;
+    gap: 1em;
+  }
+
+  input[type="checkbox"] {
+    height: 1.25em;
+  }
+
+  .nav {
+    font-size: 1em;
+  }
+}
+
+/* Extra Large: Big monitors */
+@media (min-width: 1201px) {}
